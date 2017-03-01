@@ -5,7 +5,7 @@
 
 import numpy as np
 import glob
-caffe_root = '../../'
+caffe_root = '/home/qin.weining/workspace/caffe-rc4-lrcn/caffe/'
 import sys
 sys.path.insert(0, caffe_root + 'python')
 import caffe
