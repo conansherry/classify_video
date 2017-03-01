@@ -36,3 +36,9 @@ ucf_mean_RGB[2,:,:] = 128.68
 
 transformer_RGB = initialize_transformer(ucf_mean_RGB, False)
 transformer_flow = initialize_transformer(ucf_mean_flow,True)
+
+lstm_model = 'deploy.prototxt'
+RGB_lstm = 'model.caffemodel'
+RGB_lstm_net = caffe.Net(lstm_model, RGB_lstm, caffe.TEST)
+
+print 'Done'
