@@ -19,7 +19,7 @@ def lrcn_classifier(video_dict, net):
         frames = frames - mean_RGB
         frames /= 255.0
         frames = frames.transpose((0, 3, 1, 2))
-        np.concatenate((caffe_in, frames), axis=0)
+        caffe_in = np.concatenate((caffe_in, frames), axis=0)
 
         clip_clip_markers = np.ones((clip_length, 1, 1, 1))
         clip_clip_markers[0, :, :, :] = 0
