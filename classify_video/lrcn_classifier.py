@@ -26,6 +26,7 @@ def lrcn_classifier(video_dict, net):
         clip_markers = np.concatenate((clip_markers, clip_clip_markers), axis=0)
 
     out = net.forward_all(data=caffe_in, clip_markers=np.array(clip_markers))
+    print out
     output_predictions = np.mean(out['probs'], 1)
     print 'out[\'probs\'].shape', out['probs'].shape
     print 'output_predictions.shape', output_predictions.shape
