@@ -4,41 +4,23 @@
 #Use: classify_video.py video, where video is the video you wish to classify.  If no video is specified, the video "v_Archery_g01_c01" will be classified.
 
 import numpy as np
-import glob
+import cv2
+from classify_video.lrcn_classifier import lrcn_classifier
 caffe_root = '/home/qin.weining/workspace/caffe-rc4-lrcn/caffe/'
 import sys
 sys.path.insert(0, caffe_root + 'python')
 import caffe
 caffe.set_mode_gpu()
 caffe.set_device(0)
-import pickle
 
-def initialize_transformer(image_mean, is_flow):
-  shape = (10*16, 3, 227, 227)
-  transformer = caffe.io.Transformer({'data': shape})
-  channel_mean = np.zeros((3,227,227))
-  for channel_index, mean_val in enumerate(image_mean):
-    channel_mean[channel_index, ...] = mean_val
-  transformer.set_mean('data', channel_mean)
-  transformer.set_raw_scale('data', 255)
-  transformer.set_channel_swap('data', (2, 1, 0))
-  transformer.set_transpose('data', (2, 0, 1))
-  transformer.set_is_flow('data', is_flow)
-  return transformer
-
-
-ucf_mean_RGB = np.zeros((3,1,1))
-ucf_mean_flow = np.zeros((3,1,1))
-ucf_mean_flow[:,:,:] = 128
-ucf_mean_RGB[0,:,:] = 103.939
-ucf_mean_RGB[1,:,:] = 116.779
-ucf_mean_RGB[2,:,:] = 128.68
-
-transformer_RGB = initialize_transformer(ucf_mean_RGB, False)
-transformer_flow = initialize_transformer(ucf_mean_flow,True)
+test_dict = {'1': np.ones((16, 227, 227, 3), np.uint8), '2': np.ones((16, 227, 227, 3), np.uint8),
+             '3': np.ones((16, 227, 227, 3), np.uint8), '4': np.ones((16, 227, 227, 3), np.uint8),
+             '5': np.ones((16, 227, 227, 3), np.uint8)}
 
 lstm_model = 'deploy.prototxt'
 RGB_lstm = 'model.caffemodel'
 RGB_lstm_net = caffe.Net(lstm_model, RGB_lstm, caffe.TEST)
+
+lrcn_classifier(test_dict, RGB_lstm_net)
 
 print 'Done'
