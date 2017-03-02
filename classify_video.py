@@ -15,12 +15,14 @@ caffe.set_device(0)
 
 test_dict = {'1': np.ones((16, 227, 227, 3), np.uint8), '2': np.ones((16, 227, 227, 3), np.uint8),
              '3': np.ones((16, 227, 227, 3), np.uint8), '4': np.ones((16, 227, 227, 3), np.uint8),
-             '5': np.ones((16, 227, 227, 3), np.uint8)}
+             '5': np.ones((16, 227, 227, 3), np.uint8), '6': np.ones((16, 227, 227, 3), np.uint8),
+             '7': np.ones((16, 227, 227, 3), np.uint8), '8': np.ones((16, 227, 227, 3), np.uint8)}
 
 lstm_model = 'deploy.prototxt'
 RGB_lstm = 'model.caffemodel'
 RGB_lstm_net = caffe.Net(lstm_model, RGB_lstm, caffe.TEST)
 
-lrcn_classifier(test_dict, RGB_lstm_net)
+while True:
+    lrcn_classifier(test_dict, RGB_lstm_net)
 
 print 'Done'
